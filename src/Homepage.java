@@ -1,100 +1,120 @@
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 public class Homepage extends JFrame {
-    JPanel panel = new JPanel(new FlowLayout());
-    JPanel Tasks = new JPanel(new GridBagLayout());
-    JPanel Timetable = new JPanel(new GridBagLayout());
-    JPanel final_Panel = new JPanel(new GridBagLayout());
+    JPanel topPanel = new JPanel(new FlowLayout());
+    JPanel mainPanel = new JPanel(new GridBagLayout());
+    JPanel tasksPanel = new JPanel(new GridBagLayout());
+    JPanel ChangingPanel = new JPanel(new GridBagLayout());
 
-    GridBagConstraints syConstraints = new GridBagConstraints();
     GridBagConstraints gbc = new GridBagConstraints();
-    GridBagConstraints gbc_tt = new GridBagConstraints();
-    JButton home = new JButton("Home");
-    JButton student = new JButton("Student");
-    JButton grades = new JButton("Grades");
-    JButton  dashboard = new JButton("Dashboard");
-    JButton[] buttons = {home,student,grades,dashboard};
+    GridBagConstraints gbcTT = new GridBagConstraints();
+    JButton workoutButton = new JButton("Workout");
+    JButton userProfileButton = new JButton("User Profile");
+    JButton dashboardButton = new JButton("Dashboard");
+    JButton[] buttons = { workoutButton, userProfileButton, dashboardButton };
+    JButton createPlan = new JButton("Plan Creator");
+    JLabel taskLabel1 = new JLabel("Lose 12KG - By 12th June");
+    JLabel taskLabel2 = new JLabel("Be on the top of the Leaderboard");
+    JLabel taskLabel3 = new JLabel("Bench 70kg 1 rep");
+    JLabel timetableLabel = new JLabel("Timetable");
+    JLabel[] labels = { taskLabel1, taskLabel2, taskLabel3 };
 
-
-    JLabel Do_hw = new JLabel("Do HomeWork");
-    JLabel ReadforCats =  new JLabel("Read for CATS");
-    JLabel goTotheGym = new JLabel("Go the gym");
-    JLabel TT = new JLabel("Timetable");
-    JLabel[] labels = {Do_hw,ReadforCats,goTotheGym};
-    JRadioButton task1 = new JRadioButton();
-    JRadioButton task2 = new JRadioButton();
-    JRadioButton task3 = new JRadioButton();
-
-
-    JRadioButton[] radioButtons = {task1,task2,task3};
+    JRadioButton task1Radio = new JRadioButton();
+    JRadioButton task2Radio = new JRadioButton();
+    JRadioButton task3Radio = new JRadioButton();
+    JRadioButton[] radioButtons = { task1Radio, task2Radio, task3Radio };
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-int screenWidth = screenSize.width;
-int screenHeight = screenSize.height;
+    int screenWidth = screenSize.width;
+    int screenHeight = screenSize.height;
+    GridBagConstraints syConstraints = new GridBagConstraints();
 
-
-    public void config(){
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc_tt.gridx = 0;
-        gbc_tt.gridy= 0;
-        syConstraints.gridx = 0;  
-        syConstraints.gridy =0;  
-        gbc.insets = new Insets(15, 15, 15, 35);
-        
-        setLayout(new FlowLayout());
-       
-
+    public Homepage() {
+        setTitle("Responsive Homepage");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(screenWidth, screenHeight));
-        panel.setSize(new Dimension(getWidth(),50));
+        setLayout(new BorderLayout());
+
+        config();
+    }
+
+    public void config() {
+        // Top panel configuration
+        topPanel.setPreferredSize(new Dimension(screenWidth, 50));
+        int buttonWidth = (topPanel.getPreferredSize().width / 3) - 20;
+        int buttonHeight = 40;
         for (JButton button : buttons) {
-            button.setBackground(new Color(59, 89, 182)); // Facebook blue RGB
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Tahoma", Font.BOLD, 12));
-            button.setPreferredSize(new Dimension(getWidth()/5,40));
-            panel.add(button);
-        
+            button.setBackground(new Color(59, 89, 182));
+            button.setForeground(Color.WHITE);
+            button.setFocusPainted(false);
+            button.setFont(new Font("Tahoma", Font.BOLD, 12));
+            button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+            topPanel.add(button);
         }
-        for (JLabel label : labels) {
-            Tasks.add(label,gbc);
-            gbc.gridy++;
-        }
-        gbc.gridx++;
-        gbc.gridy =0;
-       Tasks.setSize(200, screenHeight);
-        for (JRadioButton radioButton : radioButtons) {
-            Tasks.add(radioButton,gbc);
-            gbc.gridy++;
-        }
-        final_Panel.add(panel,syConstraints);
 
+        // Tasks panel configuration
+        gbc.insets = new Insets(15, 15, 15, 15);
+        gbc.anchor = GridBagConstraints.WEST;
+        for (int i = 0; i < radioButtons.length; i++) {
+            gbc.gridx = 0;
+            gbc.gridy = i;
+            tasksPanel.add(radioButtons[i], gbc);
+            gbc.gridx = 1;
+            tasksPanel.add(labels[i], gbc);
+        }
 
+        // Timetable panel configuration
+        gbcTT.gridx = 0;
+        gbcTT.gridy = 0;
+        gbcTT.insets = new Insets(20, 0, 0, 0);
+        int timetableWidth = buttonWidth * 2 + 40; // Width of two buttons plus some padding
+        ChangingPanel.setPreferredSize(new Dimension(timetableWidth, 500));
+
+        ChangingPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 2, true));
+
+        // Main panel configuration
+        syConstraints.insets = new Insets(15, 15, 15, 15);
+        syConstraints.gridx = 0;
+        syConstraints.gridy = 0;
+
+        createPlan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WorkoutPlanCreator exCreator = new WorkoutPlanCreator();
+
+                // Set GridBagConstraint for exPanel to fill the entire ChangingPanel
+                GridBagConstraints c = new GridBagConstraints();
+                c.fill = GridBagConstraints.BOTH;
+                c.weightx = 1.0;
+                c.weighty = 1.0;
+                c.gridx = 0;
+                c.gridy = 0;
+                ChangingPanel.add(exCreator.getPanel(),c);
+                // Repaint the ChangingPanel to show the added component
+                ChangingPanel.revalidate();
+                ChangingPanel.repaint();
+            }
+        });
+        mainPanel.add(createPlan, syConstraints);
         syConstraints.gridy++;
-        syConstraints.anchor = GridBagConstraints.EAST;
+
+        mainPanel.add(ChangingPanel, syConstraints);
         syConstraints.gridx++;
-        final_Panel.add(Tasks,syConstraints);
+        mainPanel.add(tasksPanel, syConstraints);
 
-        syConstraints.gridy++;
-        syConstraints.gridx--;
-        syConstraints.anchor = GridBagConstraints.CENTER;
-        Timetable.setPreferredSize(new Dimension(800, 300));
-        Timetable.add(TT,gbc_tt);
-        Timetable.setBorder(BorderFactory.createLineBorder(new Color(0,0,0), 10,true));
-        final_Panel.add(Timetable,syConstraints);
-       
-        add(final_Panel);
+        // Add panels to frame
+        add(topPanel, BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
+
+        pack();
         setVisible(true);
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(Homepage::new);
+    }
 }

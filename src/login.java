@@ -2,124 +2,147 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class login extends JFrame implements ActionListener {
 
-    JPanel panel_field = new JPanel();
-    JPanel panel_label = new JPanel();
-    JPanel panel_butt = new JPanel();
+    JPanel panelField = new JPanel();
+    JPanel panelLabel = new JPanel();
+    JPanel panelButt = new JPanel();
 
-
-    JLabel login = new JLabel("Login:");
+    JLabel login = new JLabel("Email:");
     JLabel password = new JLabel("Password:");
-    JLabel welcome = new JLabel("Welcome to School AI");
+    JLabel welcome = new JLabel("Welcome to Muscle Flex");
 
-    JTextField login_Field = new JTextField();
-    JTextField pass_Field = new JTextField();
-
+    JTextField emailField = new JTextField();
+    JPasswordField passField = new JPasswordField();
 
     GridBagConstraints gbc = new GridBagConstraints();
-    JButton sign_in = new JButton("Login");
+    JButton signIn = new JButton("Login");
     JButton register = new JButton("Register");
 
     public void config() {
         gbc.insets = new Insets(15, 15, 15, 15);
-        setSize(500,500);
-        setMaximumSize(new Dimension(500,580));
+        setSize(700, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
+        getContentPane().setBackground(Color.BLACK);
 
-        //Maxes a box layout for the panels that are aligned vertically
-        panel_field.setLayout(new BoxLayout(panel_field, BoxLayout.Y_AXIS));
-        panel_label.setLayout(new BoxLayout(panel_label, BoxLayout.Y_AXIS));
-        JLabel[] labels = {login,password};
-        JTextField[] fields = {pass_Field,login_Field};
-    
+        // Box layout for the panels that are aligned vertically
+        panelField.setLayout(new BoxLayout(panelField, BoxLayout.Y_AXIS));
+        panelLabel.setLayout(new BoxLayout(panelLabel, BoxLayout.Y_AXIS));
+        panelField.setBackground(Color.DARK_GRAY);
+        panelLabel.setBackground(Color.DARK_GRAY);
+        panelButt.setBackground(Color.BLACK);
+
+        JLabel[] labels = {login, password};
+        JTextField[] fields = {emailField, passField};
+
+        // Styling for welcome label
+        welcome.setFont(new Font("Arial", Font.BOLD, 30));
+        welcome.setForeground(Color.RED);
+        welcome.setHorizontalAlignment(JLabel.CENTER);
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-  
-
-        // Styling for welcome:
-        welcome.setFont(new Font("Arial", ALLBITS, 30));
-        welcome.setPreferredSize(new Dimension(400,30));
-        
-        welcome.setBackground(new Color(126,233,166));
-        add(welcome,gbc);
+        gbc.gridwidth = 2;
+        add(welcome, gbc);
         gbc.gridy++;
+        gbc.gridwidth = 1;
 
-
-        
-        // styling of the labels 
-
+        // Styling of the labels
         for (JLabel label : labels) {
-
-            label.setBounds(EXIT_ON_CLOSE, ABORT, 200, 30);
+            label.setFont(new Font("Verdana", Font.BOLD, 20));
+            label.setForeground(Color.WHITE);
             label.setHorizontalAlignment(JLabel.CENTER);
-            label.setFont(new Font(getName(), ABORT, 20));
-            
-           panel_label.add(label);
-           // creates an invisible elemenent for spacing 
-           panel_label.add(Box.createRigidArea(new Dimension(5, 10)));
-           
-
+            panelLabel.add(label);
+            panelLabel.add(Box.createRigidArea(new Dimension(5, 10)));
         }
-        //Styling of the textfields 
 
+        // Styling of the text fields
         for (JTextField field : fields) {
-            
-            field.setPreferredSize(new Dimension(200,30));
-            
+            field.setPreferredSize(new Dimension(200, 30));
+            field.setFont(new Font("Arial", Font.PLAIN, 18));
+            field.setBackground(Color.LIGHT_GRAY);
+            field.setForeground(Color.BLACK);
             field.setHorizontalAlignment(JTextField.CENTER);
-            panel_field.add(field);
-            // INVISIBLE ELEMENT FOR SPACING
-            panel_field.add(Box.createRigidArea(new Dimension(5, 10)));
+            panelField.add(field);
+            panelField.add(Box.createRigidArea(new Dimension(5, 10)));
         }
 
-        
-      
-        // adding to the frame with gbc contrainsts 
-    add(panel_label,gbc);
-    gbc.gridx++;
-    add(panel_field,gbc);
-    panel_butt.add(sign_in);
-    panel_butt.add(register);
-    gbc.gridy++;
-    add(panel_butt,gbc);
-   
+        // Adding to the frame with gbc constraints
+        add(panelLabel, gbc);
+        gbc.gridx++;
+        add(panelField, gbc);
 
+        // Styling buttons
+        signIn.setFont(new Font("SansSerif", Font.BOLD, 18));
+        signIn.setBackground(Color.RED);
+        signIn.setForeground(Color.WHITE);
+        signIn.setFocusPainted(false);
+        signIn.setBorderPainted(false);
+
+        register.setFont(new Font("SansSerif", Font.BOLD, 18));
+        register.setBackground(Color.RED);
+        register.setForeground(Color.WHITE);
+        register.setFocusPainted(false);
+        register.setBorderPainted(false);
+
+        panelButt.add(signIn);
+        panelButt.add(register);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        add(panelButt, gbc);
 
         setTitle("Login");
-        
-        
-    
     }
-  public void addActionEvent(){
-    sign_in.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        setVisible(false);
-        Homepage exHomepage = new Homepage();
-        exHomepage.config();
+
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
         
-        }
-    });
-  }
-    public void start(){
+    }
+
+
+
+    public void addActionEvent() {
+        signIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = emailField.getText();
+            String pword = new String(passField.getPassword());
+            DatabaseConnector execute = new DatabaseConnector();
+            boolean isValidUser = execute.loginUser(email, pword);
+
+            if (isValidUser) {
+                JOptionPane.showMessageDialog(login, "Login successful!");
+                setVisible(false);
+                Homepage exHomepage = new Homepage();
+                exHomepage.config();
+            } else {
+                JOptionPane.showMessageDialog(login, "Invalid email or password.");
+            }
+            }
+        });
+        register.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                setVisible(false);
+            registration exRegistration = new registration();
+            exRegistration.start();
+            }
+        });
+    }
+
+    public void start() {
         config();
         addActionEvent();
         setVisible(true);
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-    }
+
+   
 
 }
