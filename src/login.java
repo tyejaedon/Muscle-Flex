@@ -4,29 +4,29 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class login extends JFrame implements ActionListener {
+public class login  implements ActionListener {
 
     JPanel panelField = new JPanel();
     JPanel panelLabel = new JPanel();
     JPanel panelButt = new JPanel();
 
-    JLabel login = new JLabel("Email:");
+    JLabel login = new JLabel("Username:");
     JLabel password = new JLabel("Password:");
     JLabel welcome = new JLabel("Welcome to Muscle Flex");
 
-    JTextField emailField = new JTextField();
+    JTextField username_Field = new JTextField();
     JPasswordField passField = new JPasswordField();
 
     GridBagConstraints gbc = new GridBagConstraints();
     JButton signIn = new JButton("Login");
     JButton register = new JButton("Register");
-
+    JFrame frame = new JFrame();
     public void config() {
         gbc.insets = new Insets(15, 15, 15, 15);
-        setSize(700, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
-        getContentPane().setBackground(Color.BLACK);
+        frame.setSize(700, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridBagLayout());
+        frame.getContentPane().setBackground(Color.BLACK);
 
         // Box layout for the panels that are aligned vertically
         panelField.setLayout(new BoxLayout(panelField, BoxLayout.Y_AXIS));
@@ -36,7 +36,7 @@ public class login extends JFrame implements ActionListener {
         panelButt.setBackground(Color.BLACK);
 
         JLabel[] labels = {login, password};
-        JTextField[] fields = {emailField, passField};
+        JTextField[] fields = {username_Field, passField};
 
         // Styling for welcome label
         welcome.setFont(new Font("Arial", Font.BOLD, 30));
@@ -46,7 +46,7 @@ public class login extends JFrame implements ActionListener {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        add(welcome, gbc);
+        frame.add(welcome, gbc);
         gbc.gridy++;
         gbc.gridwidth = 1;
 
@@ -71,9 +71,9 @@ public class login extends JFrame implements ActionListener {
         }
 
         // Adding to the frame with gbc constraints
-        add(panelLabel, gbc);
+        frame.add(panelLabel, gbc);
         gbc.gridx++;
-        add(panelField, gbc);
+        frame.add(panelField, gbc);
 
         // Styling buttons
         signIn.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -93,9 +93,9 @@ public class login extends JFrame implements ActionListener {
         gbc.gridy++;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
-        add(panelButt, gbc);
+        frame.add(panelButt, gbc);
 
-        setTitle("Login");
+        frame.setTitle("Login");
     }
 
     
@@ -111,14 +111,14 @@ public class login extends JFrame implements ActionListener {
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText();
+                String username = username_Field.getText();
             String pword = new String(passField.getPassword());
-            DatabaseConnector execute = new DatabaseConnector();
-            boolean isValidUser = execute.loginUser(email, pword);
+            DatabaseConnector dbConnector = DatabaseConnector.getInstance();
+            boolean isValidUser = dbConnector.loginUser(username, pword);
 
             if (isValidUser) {
                 JOptionPane.showMessageDialog(login, "Login successful!");
-                setVisible(false);
+                frame.setVisible(false);
                 Homepage exHomepage = new Homepage();
                 exHomepage.config();
             } else {
@@ -130,7 +130,7 @@ public class login extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
-                setVisible(false);
+               frame.setVisible(false);
             registration exRegistration = new registration();
             exRegistration.start();
             }
@@ -140,7 +140,7 @@ public class login extends JFrame implements ActionListener {
     public void start() {
         config();
         addActionEvent();
-        setVisible(true);
+        frame.setVisible(true);
     }
 
    

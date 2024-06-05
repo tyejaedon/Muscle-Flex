@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class Homepage extends JFrame {
+public class Homepage {
     JPanel topPanel = new JPanel(new FlowLayout());
     JPanel mainPanel = new JPanel(new GridBagLayout());
     JPanel tasksPanel = new JPanel(new GridBagLayout());
@@ -32,12 +32,13 @@ public class Homepage extends JFrame {
     int screenWidth = screenSize.width;
     int screenHeight = screenSize.height;
     GridBagConstraints syConstraints = new GridBagConstraints();
-
+    JFrame frame = new JFrame();
     public Homepage() {
-        setTitle("Responsive Homepage");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(new Dimension(screenWidth, screenHeight));
-        setLayout(new BorderLayout());
+       frame.setTitle("Responsive Homepage");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(new Dimension(screenWidth, screenHeight));
+        frame.setLayout(new BorderLayout());
+        
 
         config();
     }
@@ -107,11 +108,11 @@ public class Homepage extends JFrame {
         mainPanel.add(tasksPanel, syConstraints);
 
         // Add panels to frame
-        add(topPanel, BorderLayout.NORTH);
-        add(mainPanel, BorderLayout.CENTER);
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(mainPanel, BorderLayout.CENTER);
 
-        pack();
-        setVisible(true);
+        frame.pack();
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {
